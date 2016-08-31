@@ -18,12 +18,29 @@ describe 'Testing Score' do
     expect (proc  {Scrabble::Scoring.scoring('elizabethtown')}).must_raise ArgumentError
   end
 
-  it 'The array ["qi", "jazzman"] should return jazzman' do
-    expect (Scrabble::Scoring.highest_score_from(["qi","jazzman"])).must_equal("JAZZMAN")
+end
+
+describe 'Testing Player' do # Wave 2
+  it 'Player name should return players name' do
+    expect (Scrabble::Player.new("Miriam").name).must_equal("Miriam")
   end
 
-  # it 'The array ["qi", "jazzman"] should return jazzman' do
-  #   expect (Scrabble::Scoring.highest_score_from(["qi","jazzman"])).mmust_equal("JAZZMAN")
-  # end
+  it 'play(word) returns the score of the word' do
+    bob = Scrabble::Player.new("Bob")
+    expect (bob.play("get")).must_equal(4)
+    expect (bob.play("jazzman")).must_equal(84)
+  end
+
+  it 'play(word thats too long) raises ArgumentError' do
+    joe = Scrabble::Player.new("Joe")
+    expect (joe.play("more words")).must_raise ArgumentError
+  end
+
+  it 'all plays function' do
+    bob = Scrabble::Player.new("Bob")
+    bob.play("get")
+    bob.play("jazzman")
+    expect (bob.plays).must_equal(["get","jazzman"])
+  end
 
 end
